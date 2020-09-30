@@ -1,0 +1,22 @@
+[Unit]
+Description=Quick and dirty Kubernetes health checker
+After=network.target
+After=kubelet.service
+
+[Service]
+User=k8s-health
+Group=kube-cert
+WorkingDirectory=/var/lib/k8s-health
+ExecStartPre=+/sbin/ip link set dummy0 down
+#ExecStartPre=/usr/local/bin/pipenv sync
+ExecStart=/usr/local/bin/pipenv run ./k8s-healthcheck.py
+ExecStartPost=+/sbin/ip link set dummy0 up
+ExecStopPost=+/sbin/ip link set dummy0 down
+Type=notify
+WatchdogSec=30
+Restart=on-failure
+NotifyAccess=main
+
+[Install]
+WantedBy=default.target
+
