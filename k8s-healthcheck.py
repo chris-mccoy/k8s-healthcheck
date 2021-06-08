@@ -76,8 +76,8 @@ def main():
     #embed()
 
     logging.root.addHandler(systemd.journal.JournalHandler())
-    #logging.root.setLevel(logging.DEBUG)
-    logging.root.setLevel(logging.INFO)
+    logging.root.setLevel(logging.DEBUG)
+    #logging.root.setLevel(logging.INFO)
 
     unhealthy = True
     retries = 0
